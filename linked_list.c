@@ -22,6 +22,7 @@ void remove_from_linked_list(linked_list_t *list, node_t *node) {
   if (!P && !N) {
     list->head = 0;
     list->tail = 0;
+    list->size--;
     free(node);
     return;
   }
