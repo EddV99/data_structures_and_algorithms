@@ -1,9 +1,10 @@
 CC=gcc
-INC_DIR=include
-CFLAGS=-I$(INC_DIR) -g -Wall -Wextra
+INCLUDE_DIR=include
+CFLAGS=-I$(INCLUDE_DIR) -g -Wall -Wextra
 BUILD_DIR=build
 CODE_DIRS=.
 CFILES=$(foreach x, $(CODE_DIRS), $(wildcard $(x)/*.c))
+# TODO: fix, only works for source code in . directory
 OBJECTS=$(patsubst ./%.c,$(BUILD_DIR)/%.o,$(CFILES))
 
 all: $(BUILD_DIR)/main
