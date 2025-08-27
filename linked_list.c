@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-node_t* get_from_linked_list_helper(linked_list_t *list, size_t index);
+node_t *get_from_linked_list_helper(linked_list_t *list, size_t index);
 
 linked_list_t create_linked_list() {
 
@@ -48,7 +48,7 @@ void remove_at_from_linked_list(linked_list_t *list, size_t index) {
   ASSERT(index < list->size,
          "Remove At Linked List: Index must be less than size of list");
 
-  node_t* node = get_from_linked_list_helper(list, index);
+  node_t *node = get_from_linked_list_helper(list, index);
 
   remove_from_linked_list(list, node);
 }
@@ -111,7 +111,7 @@ void insert_to_linked_list(linked_list_t *list, size_t index, int value) {
   node_t *node = malloc(sizeof(node_t));
   node->value = value;
 
-  node_t* current = get_from_linked_list_helper(list, index);
+  node_t *current = get_from_linked_list_helper(list, index);
 
   node->next = current;
   node->prev = current->prev;
@@ -144,7 +144,7 @@ void print_linked_list_int(linked_list_t *list) {
   }
 }
 
-node_t* get_from_linked_list_helper(linked_list_t *list, size_t index) {
+node_t *get_from_linked_list_helper(linked_list_t *list, size_t index) {
   node_t *current = 0;
 
   if ((list->size - index) < (list->size / 2)) {
@@ -168,6 +168,6 @@ node_t* get_from_linked_list_helper(linked_list_t *list, size_t index) {
 int get_from_linked_list(linked_list_t *list, size_t index) {
   ASSERT(index < list->size,
          "Getting From Linked List: Index must be less than size of list");
-  
+
   return get_from_linked_list_helper(list, index)->value;
 }
