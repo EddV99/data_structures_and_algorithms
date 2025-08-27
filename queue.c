@@ -8,11 +8,11 @@ queue_t create_queue() {
   return create_linked_list();
 }
 
-void enqueue(queue_t* queue, int value){
+void queue_enqueue(queue_t* queue, int value){
   append_to_linked_list(queue, value);
 }
 
-void dequeue(queue_t* queue){
+void queue_dequeue(queue_t* queue){
   ASSERT(queue->size > 0, "Queue: size must be greater than zero to dequeue");
   remove_at_from_linked_list(queue, 0);
 }
