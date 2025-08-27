@@ -11,8 +11,11 @@ all: $(BUILD_DIR)/main
 $(BUILD_DIR)/main: $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-$(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $@
 
 format:
 	find -iname '*.h' -o -iname '*.c' | xargs clang-format -i
@@ -21,6 +24,6 @@ run:
 	./$(BUILD_DIR)/main
 
 clean: 
-	rm build/*
+	$(RM) $(BUILD_DIR)/*
 
 .PHONY: all clean run format
