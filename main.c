@@ -1,14 +1,13 @@
-#include "array_list.h"
+#include "quick_sort.h"
 #include "common.h"
 
 #include <stdio.h>
 
 int main() {
-  array_list_t al = create_array_list();
-  for (int i = 0; i < 1000; i++) {
-    push_back_array_list(&al, i);
-  }
-  print_array_list(&al);
-  printf("capacity: %lu\n", al.capacity);
-  printf("size: %lu\n", al.size);
+  int array[] = {9, 3, 7, 4, 69, 420, 42, 1, 33};
+  const int size = 9;
+
+  print_array(array, size);
+  quick_sort(array, size);
+  print_array(array, size);
 }
