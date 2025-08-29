@@ -6,7 +6,7 @@
 
 queue_t create_queue() { return create_linked_list(); }
 
-void queue_enqueue(queue_t *queue, int value) {
+void queue_enqueue(queue_t *queue, void *value) {
   append_to_linked_list(queue, value);
 }
 
@@ -15,7 +15,7 @@ void queue_dequeue(queue_t *queue) {
   remove_at_from_linked_list(queue, 0);
 }
 
-int queue_peek(queue_t *queue) {
+void *queue_peek(queue_t *queue) {
   ASSERT(queue->size > 0, "Queue: size must be greater than zero to peek");
   return get_from_linked_list(queue, 0);
 }

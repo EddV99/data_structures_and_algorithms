@@ -54,7 +54,7 @@ void remove_at_from_linked_list(linked_list_t *list, size_t index) {
   remove_from_linked_list(list, node);
 }
 
-void prepend_to_linked_list(linked_list_t *list, int value) {
+void prepend_to_linked_list(linked_list_t *list, void *value) {
   node_t *node = malloc(sizeof(node_t));
   node->value = value;
 
@@ -75,7 +75,7 @@ void prepend_to_linked_list(linked_list_t *list, int value) {
   list->size++;
 }
 
-void append_to_linked_list(linked_list_t *list, int value) {
+void append_to_linked_list(linked_list_t *list, void *value) {
   node_t *node = malloc(sizeof(node_t));
   node->value = value;
 
@@ -96,7 +96,7 @@ void append_to_linked_list(linked_list_t *list, int value) {
   list->size++;
 }
 
-void insert_to_linked_list(linked_list_t *list, size_t index, int value) {
+void insert_to_linked_list(linked_list_t *list, size_t index, void *value) {
   ASSERT(index <= list->size,
          "Inserting Linked List: Index must be less than size of list");
 
@@ -133,7 +133,7 @@ void print_linked_list_int(linked_list_t *list) {
   if (list->head) {
     node_t *current = list->head;
     while (current) {
-      printf("(%d)", (int)current->value);
+      printf("(%d)", (*(int *)current->value));
       current = current->next;
       if (current) {
         printf("->");
@@ -166,7 +166,7 @@ node_t *get_from_linked_list_helper(linked_list_t *list, size_t index) {
   return current;
 }
 
-int get_from_linked_list(linked_list_t *list, size_t index) {
+void *get_from_linked_list(linked_list_t *list, size_t index) {
   ASSERT(index < list->size,
          "Getting From Linked List: Index must be less than size of list");
 
