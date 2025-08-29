@@ -1,5 +1,6 @@
 #include "binary_tree.h"
 #include "common.h"
+#include "queue.h"
 
 #include <stdlib.h>
 
@@ -19,6 +20,37 @@ binary_tree_t create_binary_tree() {
       .size = 0,
   };
   return tree;
+}
+
+void bfs_helper(queue_t *q, int *array, int *index) {
+  if (q->size <= 0)
+    return;
+
+  tree_node_t *node = queue_peek(q);
+  queue_dequeue(q);
+
+  if (node->left) {
+    queue_enqueue(q, node->left);
+  }
+  if (node->right) {
+    queue_enqueue(q, node->right);
+  }
+
+  array[*index] = node->value;
+  (*index)++;
+  bfs_helper(q, array, index);
+}
+
+int *bfs(binary_tree_t *tree) {
+  int *result = 0;
+  if (tree->root) {
+    result = malloc(sizeof(tree->root->value) * tree->size);
+    int index = 0;
+    queue_t q = create_queue();
+    queue_enqueue(&q, tree->root);
+    bfs_helper(&q, result, &index);
+  }
+  return result;
 }
 
 void pre_order_traversal_helper(tree_node_t *node, int *array, int *index) {
