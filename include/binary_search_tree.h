@@ -9,5 +9,6 @@ bst_t create_bst();
 void bst_insert(bst_t *bst, int value);
 int bst_find(bst_t *bst, int target);
 void bst_delete(bst_t *bst, int target);
+void bst_print(const bst_t *bst);
 
 #endif

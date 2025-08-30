@@ -1,6 +1,7 @@
 #include "binary_search_tree.h"
 #include "binary_tree.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 bst_t create_bst() {
@@ -77,6 +78,13 @@ void bst_delete_helper(tree_node_t *node, int target) {
       while (move->right) {
         move = move->right;
       }
+
+      if (move->parent->left == move) {
+        move->parent->left = 0;
+      } else {
+        move->parent->right = 0;
+      }
+
       move->right = node->right;
       move->left = node->left;
       if (parent->left == node) {
@@ -98,4 +106,31 @@ void bst_delete(bst_t *bst, int target) {
   if (bst->root) {
     bst_delete_helper(bst->root, target);
   }
+}
+
+void bst_print_helper(char *prefix, int size, const tree_node_t *node,
+                      bool is_left) {
+  if (node != nullptr) {
+    printf("%s", prefix);
+    printf("%s", is_left ? "├──" : "└──");
+    printf("%d\n", node->value);
+
+    int byte_count = sizeof(char) * (size + 4);
+    char *new_prefix = malloc(byte_count);
+    if (is_left) {
+      snprintf(new_prefix, byte_count, "%s%s", prefix, "│   ");
+    } else {
+      snprintf(new_prefix, byte_count, "%s%s", prefix, "    ");
+    }
+    bst_print_helper(new_prefix, size + 4, node->left, true);
+    bst_print_helper(new_prefix, size + 4, node->right, false);
+    free(new_prefix);
+  }
+}
+
+void bst_print(const bst_t *bst) {
+  char *prefix = malloc(sizeof(char) * 1);
+  prefix[0] = '\0';
+  bst_print_helper(prefix, 1, bst->root, false);
+  free(prefix);
 }
