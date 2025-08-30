@@ -27,13 +27,13 @@ void bst_insert_helper(bst_t *bst, tree_node_t *node, void *value) {
     if (node->left) {
       bst_insert_helper(bst, node->left, value);
     } else {
-      node->left = create_tree_node(node, 0, 0, value);
+      node->left = tree_node_create(node, 0, 0, value);
     }
   } else {
     if (node->right) {
       bst_insert_helper(bst, node->right, value);
     } else {
-      node->right = create_tree_node(node, 0, 0, value);
+      node->right = tree_node_create(node, 0, 0, value);
     }
   }
 }
@@ -42,7 +42,7 @@ void bst_insert(bst_t *bst, void *value) {
   if (bst->tree->root) {
     bst_insert_helper(bst, bst->tree->root, value);
   } else {
-    bst->tree->root = create_tree_node(0, 0, 0, value);
+    bst->tree->root = tree_node_create(0, 0, 0, value);
   }
 }
 

@@ -10,7 +10,7 @@ typedef struct tree_node_t {
   void *value;
 } tree_node_t;
 
-tree_node_t *create_tree_node(tree_node_t *parent, tree_node_t *left,
+tree_node_t *tree_node_create(tree_node_t *parent, tree_node_t *left,
                               tree_node_t *right, void *value);
 
 typedef struct {
@@ -18,7 +18,7 @@ typedef struct {
   size_t size;
 } binary_tree_t;
 
-binary_tree_t create_binary_tree();
+binary_tree_t binary_tree_create();
 
 void **bfs(binary_tree_t *tree);
 void **pre_order_traversal(binary_tree_t *tree);

@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-tree_node_t *create_tree_node(tree_node_t *parent, tree_node_t *left,
+tree_node_t *tree_node_create(tree_node_t *parent, tree_node_t *left,
                               tree_node_t *right, void *value) {
   tree_node_t *node = malloc(sizeof(tree_node_t));
   node->parent = parent;
@@ -14,7 +14,7 @@ tree_node_t *create_tree_node(tree_node_t *parent, tree_node_t *left,
   return node;
 }
 
-binary_tree_t create_binary_tree() {
+binary_tree_t binary_tree_create() {
   binary_tree_t tree = {
       .root = 0,
       .size = 0,
@@ -28,7 +28,7 @@ void **bfs(binary_tree_t *tree) {
     result = malloc(sizeof(tree->root->value) * tree->size);
     int index = 0;
 
-    queue_t q = create_queue();
+    queue_t q = queue_create();
     queue_enqueue(&q, tree->root);
     while (q.size) {
       tree_node_t *node = queue_peek(&q);

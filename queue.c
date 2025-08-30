@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-queue_t create_queue() { return linked_list_create(); }
+queue_t queue_create() { return linked_list_create(); }
 
 void queue_enqueue(queue_t *queue, void *value) {
   linked_list_append(queue, value);
@@ -20,7 +20,7 @@ void *queue_peek(queue_t *queue) {
   return linked_list_get(queue, 0);
 }
 
-void print_queue(queue_t *queue) {
+void queue_print_int(queue_t *queue) {
   printf("FRONT -> BACK\n");
   linked_list_print_int(queue);
 }
