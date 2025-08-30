@@ -15,17 +15,17 @@ typedef struct {
   size_t size;
 } linked_list_t;
 
-linked_list_t create_linked_list();
+linked_list_t linked_list_create();
 
-void remove_from_linked_list(linked_list_t *list, node_t *node);
-void remove_at_from_linked_list(linked_list_t *list, size_t index);
+void linked_list_remove(linked_list_t *list, node_t *node);
+void linked_list_remove_at(linked_list_t *list, size_t index);
 
-void prepend_to_linked_list(linked_list_t *list, void *value);
-void append_to_linked_list(linked_list_t *list, void *value);
-void insert_to_linked_list(linked_list_t *list, size_t index, void *value);
+void linked_list_prepend(linked_list_t *list, void *value);
+void linked_list_append(linked_list_t *list, void *value);
+void linked_list_insert(linked_list_t *list, size_t index, void *value);
 
-void *get_from_linked_list(linked_list_t *list, size_t index);
+void *linked_list_get(linked_list_t *list, size_t index);
 
-void print_linked_list_int(linked_list_t *list);
+void linked_list_print_int(linked_list_t *list);
 
 #endif

@@ -4,23 +4,23 @@
 
 #include <stdio.h>
 
-queue_t create_queue() { return create_linked_list(); }
+queue_t create_queue() { return linked_list_create(); }
 
 void queue_enqueue(queue_t *queue, void *value) {
-  append_to_linked_list(queue, value);
+  linked_list_append(queue, value);
 }
 
 void queue_dequeue(queue_t *queue) {
   ASSERT(queue->size > 0, "Queue: size must be greater than zero to dequeue");
-  remove_at_from_linked_list(queue, 0);
+  linked_list_remove_at(queue, 0);
 }
 
 void *queue_peek(queue_t *queue) {
   ASSERT(queue->size > 0, "Queue: size must be greater than zero to peek");
-  return get_from_linked_list(queue, 0);
+  return linked_list_get(queue, 0);
 }
 
 void print_queue(queue_t *queue) {
   printf("FRONT -> BACK\n");
-  print_linked_list_int(queue);
+  linked_list_print_int(queue);
 }
