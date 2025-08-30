@@ -6,19 +6,19 @@
 typedef struct {
   size_t capacity;
   size_t size;
-  int *values;
+  void **values;
 } array_list_t;
 
-array_list_t create_array_list();
+array_list_t array_list_create();
 
-void push_back_array_list(array_list_t *array, int value);
-void push_at_array_list(array_list_t *array, size_t index, int value);
+void array_list_push_back(array_list_t *array, void *value);
+void array_list_insert(array_list_t *array, size_t index, void *value);
 
-int pop_back_array_list(array_list_t *array);
-int pop_at_array_list(array_list_t *array, size_t index);
+void *array_list_pop_back(array_list_t *array);
+void *array_list_remove(array_list_t *array, size_t index);
 
-int get_array_list(array_list_t *array, size_t index);
+void *array_list_get(array_list_t *array, size_t index);
 
-void print_array_list(array_list_t *array);
+void array_list_print_int(array_list_t *array);
 
 #endif

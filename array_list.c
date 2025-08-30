@@ -3,11 +3,11 @@
 
 #include <string.h>
 
-array_list_t create_array_list() {
+array_list_t array_list_create() {
   array_list_t array = {
       .capacity = 1,
       .size = 0,
-      .values = malloc(sizeof(int)),
+      .values = malloc(sizeof(void *)),
   };
 
   return array;
@@ -15,15 +15,15 @@ array_list_t create_array_list() {
 
 void grow_internal_array(array_list_t *array) {
   size_t new_capacity = array->capacity * 2;
-  int *new_array = malloc(sizeof(int) * new_capacity);
-  memcpy(new_array, array->values, sizeof(int) * array->size);
+  void **new_array = malloc(sizeof(void *) * new_capacity);
+  memcpy(new_array, array->values, sizeof(void *) * array->size);
 
   free(array->values);
   array->values = new_array;
   array->capacity = new_capacity;
 }
 
-void push_back_array_list(array_list_t *array, int value) {
+void array_list_push_back(array_list_t *array, void *value) {
   if (array->size + 1 > array->capacity) {
     grow_internal_array(array);
   }
@@ -32,15 +32,15 @@ void push_back_array_list(array_list_t *array, int value) {
   array->size++;
 }
 
-void push_at_array_list(array_list_t *array, size_t index, int value) {
+void array_list_insert(array_list_t *array, size_t index, void *value) {
   ASSERT(index < array->size, "Array List: Index must be less than size");
   if (array->size + 1 > array->capacity) {
     grow_internal_array(array);
   }
 
-  int tmp = array->values[index];
+  void *tmp = array->values[index];
   for (size_t i = index; i < array->size; i++) {
-    int tmp2 = array->values[i + 1];
+    void *tmp2 = array->values[i + 1];
     array->values[i + 1] = tmp;
     tmp = tmp2;
   }
@@ -49,16 +49,16 @@ void push_at_array_list(array_list_t *array, size_t index, int value) {
   array->size++;
 }
 
-int pop_back_array_list(array_list_t *array) {
+void *array_list_pop_back(array_list_t *array) {
   ASSERT(array->size > 0, "Array List: Size must be greater than zero to pop");
   array->size--;
   return array->values[array->size];
 }
-int pop_at_array_list(array_list_t *array, size_t index) {
+void *array_list_remove(array_list_t *array, size_t index) {
   ASSERT(array->size > 0, "Array List: Size must be greater than zero to pop");
   ASSERT(index < array->size, "Array List: Index must be less than size");
 
-  int pop = array->values[index];
+  void *pop = array->values[index];
 
   for (size_t i = index; i < array->size - 1; i++) {
     array->values[i] = array->values[i + 1];
@@ -68,12 +68,12 @@ int pop_at_array_list(array_list_t *array, size_t index) {
   return pop;
 }
 
-int get_array_list(array_list_t *array, size_t index) {
+void *array_list_get(array_list_t *array, size_t index) {
   ASSERT(index < array->size, "Array List: Index must be less than size");
 
   return array->values[index];
 }
 
-void print_array_list(array_list_t *array) {
-  print_array(array->values, array->size);
+void array_list_print_int(array_list_t *array) {
+  array_print_int((int *)array->values, array->size);
 }

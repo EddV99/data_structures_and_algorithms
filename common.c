@@ -7,7 +7,7 @@ void swap(int *array, int x1, int x2) {
   array[x2] = tmp;
 }
 
-void print_array(int *array, int size) {
+void array_print_int(int *array, int size) {
   printf("[");
   for (int i = 0; i < size - 1; i++) {
     printf("%d, ", array[i]);

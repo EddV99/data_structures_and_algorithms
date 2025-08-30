@@ -4,56 +4,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bst_t create_bst() {
-  bst_t bst = create_binary_tree();
+bst_t bst_create(int (*comparator)(void *, void *)) {
+  binary_tree_t *tree = malloc(sizeof(binary_tree_t));
+  tree->root = 0;
+  tree->size = 0;
+  bst_t bst = {
+      .tree = tree,
+      .comparator = comparator,
+  };
   return bst;
 }
 
-void bst_insert_helper(tree_node_t *node, int value) {
-  if (value <= node->value) {
+void bst_free(bst_t *bst) {
+  if (bst) {
+    free(bst->tree);
+    free(bst);
+  }
+}
+
+void bst_insert_helper(bst_t *bst, tree_node_t *node, void *value) {
+  if (bst->comparator(value, node->value)) {
     if (node->left) {
-      bst_insert_helper(node->left, value);
+      bst_insert_helper(bst, node->left, value);
     } else {
       node->left = create_tree_node(node, 0, 0, value);
     }
   } else {
     if (node->right) {
-      bst_insert_helper(node->right, value);
+      bst_insert_helper(bst, node->right, value);
     } else {
       node->right = create_tree_node(node, 0, 0, value);
     }
   }
 }
 
-void bst_insert(bst_t *bst, int value) {
-  if (bst->root) {
-    bst_insert_helper(bst->root, value);
+void bst_insert(bst_t *bst, void *value) {
+  if (bst->tree->root) {
+    bst_insert_helper(bst, bst->tree->root, value);
   } else {
-    bst->root = create_tree_node(0, 0, 0, value);
+    bst->tree->root = create_tree_node(0, 0, 0, value);
   }
 }
 
-int bst_find_helper(tree_node_t *node, int target) {
+int bst_find_helper(bst_t *bst, tree_node_t *node, void *target) {
   if (!node) {
     return 0;
   }
   if (node->value == target) {
     return 1;
   }
-  if (node->value > target) {
-    return bst_find_helper(node->left, target);
+  if (bst->comparator(target, node->value)) {
+    return bst_find_helper(bst, node->left, target);
   }
-  return bst_find_helper(node->right, target);
+  return bst_find_helper(bst, node->right, target);
 }
 
-int bst_find(bst_t *bst, int target) {
-  return bst_find_helper(bst->root, target);
+int bst_find(bst_t *bst, void *target) {
+  return bst_find_helper(bst, bst->tree->root, target);
 }
 
-void bst_delete_helper(tree_node_t *node, int target) {
+void bst_delete_helper(bst_t *bst, tree_node_t *node, void *target) {
   if (!node) {
     return;
   }
+
   if (node->value == target) {
     if (!node->left && !node->right) {
       tree_node_t *parent = node->parent;
@@ -95,25 +109,25 @@ void bst_delete_helper(tree_node_t *node, int target) {
 
       free(node);
     }
-  }
-  if (node->value > target) {
-    return bst_delete_helper(node->left, target);
-  }
-  return bst_delete_helper(node->right, target);
-}
-
-void bst_delete(bst_t *bst, int target) {
-  if (bst->root) {
-    bst_delete_helper(bst->root, target);
+  } else if (bst->comparator(target, node->value)) {
+    return bst_delete_helper(bst, node->left, target);
+  } else {
+    return bst_delete_helper(bst, node->right, target);
   }
 }
 
-void bst_print_helper(char *prefix, int size, const tree_node_t *node,
-                      bool is_left) {
+void bst_delete(bst_t *bst, void *target) {
+  if (bst->tree->root) {
+    bst_delete_helper(bst, bst->tree->root, target);
+  }
+}
+
+void bst_print_helper_int(char *prefix, int size, const tree_node_t *node,
+                          bool is_left) {
   if (node != nullptr) {
     printf("%s", prefix);
     printf("%s", is_left ? "├──" : "└──");
-    printf("%d\n", node->value);
+    printf("%d\n", (int)node->value);
 
     int byte_count = sizeof(char) * (size + 4);
     char *new_prefix = malloc(byte_count);
@@ -122,15 +136,15 @@ void bst_print_helper(char *prefix, int size, const tree_node_t *node,
     } else {
       snprintf(new_prefix, byte_count, "%s%s", prefix, "    ");
     }
-    bst_print_helper(new_prefix, size + 4, node->left, true);
-    bst_print_helper(new_prefix, size + 4, node->right, false);
+    bst_print_helper_int(new_prefix, size + 4, node->left, true);
+    bst_print_helper_int(new_prefix, size + 4, node->right, false);
     free(new_prefix);
   }
 }
 
-void bst_print(const bst_t *bst) {
+void bst_print_int(const bst_t *bst) {
   char *prefix = malloc(sizeof(char) * 1);
   prefix[0] = '\0';
-  bst_print_helper(prefix, 1, bst->root, false);
+  bst_print_helper_int(prefix, 1, bst->tree->root, false);
   free(prefix);
 }
