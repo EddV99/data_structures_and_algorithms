@@ -7,7 +7,7 @@
 stack_t create_stack() { return create_linked_list(); }
 
 void stack_enqueue(stack_t *stack, int value) {
-  prepend_to_linked_list(stack, (void*)value);
+  prepend_to_linked_list(stack, (void *)value);
 }
 
 void stack_dequeue(stack_t *stack) {
