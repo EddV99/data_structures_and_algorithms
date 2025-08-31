@@ -17,7 +17,7 @@ bst_t bst_create(int (*comparator)(void *, void *)) {
 
 void bst_free(bst_t *bst) {
   if (bst) {
-    free(bst->tree);
+    binary_tree_free(bst->tree);
     free(bst);
   }
 }

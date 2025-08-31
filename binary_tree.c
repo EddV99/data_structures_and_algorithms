@@ -22,6 +22,23 @@ binary_tree_t binary_tree_create() {
   return tree;
 }
 
+void binary_tree_free_helper(tree_node_t *node) {
+  if (!node) {
+    return;
+  }
+
+  binary_tree_free_helper(node->left);
+  binary_tree_free_helper(node->right);
+  free(node);
+}
+
+void binary_tree_free(binary_tree_t *tree) {
+  if (tree) {
+    binary_tree_free_helper(tree->root);
+    free(tree);
+  }
+}
+
 void **bfs(binary_tree_t *tree) {
   void **result = 0;
   if (tree->root) {

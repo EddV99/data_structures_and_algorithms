@@ -19,6 +19,7 @@ typedef struct {
 } binary_tree_t;
 
 binary_tree_t binary_tree_create();
+void binary_tree_free(binary_tree_t *tree);
 
 void **bfs(binary_tree_t *tree);
 void **pre_order_traversal(binary_tree_t *tree);
