@@ -8,11 +8,11 @@ typedef struct {
   long tail;
   const long capacity;
   long size;
-  int *values;
+  void **values;
 } ring_buffer_t;
 
-ring_buffer_t create_ring_buffer(long capacity);
-void push_ring_buffer(ring_buffer_t *ring, int value);
-int pop_ring_buffer(ring_buffer_t *ring);
+ring_buffer_t ring_buffer_create(long capacity);
+void ring_buffer_push(ring_buffer_t *ring, void *value);
+void *ring_buffer_pop(ring_buffer_t *ring);
 
 #endif
