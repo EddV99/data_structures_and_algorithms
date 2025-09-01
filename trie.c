@@ -3,10 +3,11 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define char_to_index(char) (char)-'a'
+#define char_to_index(ch) ((ch) - 'a')
 
-trie_node_t *trie_node_create(char is_terminal, char value) {
+trie_node_t *trie_node_create(unsigned char is_terminal, char value) {
   trie_node_t *node = malloc(sizeof(trie_node_t));
   node->is_terminal = is_terminal;
   node->value = value;
@@ -17,7 +18,7 @@ void trie_node_free(trie_node_t *node) { free(node); }
 
 trie_t trie_create() {
   trie_t trie = {
-      .root = trie_node_create(false, '\0'),
+      .root = trie_node_create(0, '\0'),
   };
   return trie;
 }
@@ -26,7 +27,7 @@ int trie_find(trie_t *trie, const char *word) {
   trie_node_t *current = trie->root;
 
   for (int i = 0; word[i] != '\0'; i++) {
-    int index = tolower(word[i]) - 'a';
+    int index = char_to_index(tolower(word[i]));
     ASSERT(index >= 0 && index < 26, "Trie: illegal character");
     current = current->children[index];
 
@@ -42,13 +43,13 @@ void trie_insert(trie_t *trie, const char *word) {
   trie_node_t *current = trie->root;
 
   for (int i = 0; word[i] != '\0'; i++) {
-    char lower_char = tolower(char_to_index(word[i]));
-    int index = lower_char - 'a';
+    char lower_char = tolower(word[i]);
+    int index = char_to_index(lower_char);
     ASSERT(index >= 0 && index < 26, "Trie: illegal character");
 
     if (!current->children[index]) {
       current->children[index] =
-          trie_node_create(word[i + 1] == '\0' ? false : true, lower_char);
+          trie_node_create(word[i + 1] == '\0' ? 1 : 0, lower_char);
     }
 
     current = current->children[index];
@@ -63,23 +64,32 @@ int no_children(trie_node_t *node) {
   return 1;
 }
 
-void trie_delete_helper(trie_node_t *node, const char *word, int index,
-                        int depth) {
-  ASSERT(index >= 0 && index < 26, "Trie: illegal character");
-
+void trie_delete_helper(trie_node_t **node, const char *word, int i) {
   if (!node) {
     return;
   }
 
-  trie_delete_helper(node->children[index], word,
-                     char_to_index(tolower(word[0])), depth + 1);
-  if (no_children(node)) {
-    trie_node_free(node);
-  } else if (word[depth + 1] == '\0') {
-    node->is_terminal = false;
+  if (word[i] == '\0') {
+    if (no_children(*node)) {
+      free(*node);
+      *node = 0;
+    } else {
+      (*node)->is_terminal = 0;
+    }
+    return;
+  } else {
+    int index = char_to_index(tolower(word[i]));
+    trie_delete_helper(&(*node)->children[index], word, i + 1);
+
+    if (no_children(*node)) {
+      free(*node);
+      *node = 0;
+    } else {
+      (*node)->is_terminal = 0;
+    }
   }
 }
 
 void trie_delete(trie_t *trie, const char *word) {
-  trie_delete_helper(trie->root, word, char_to_index(tolower(word[0])), 0);
+  trie_delete_helper(&trie->root, word, 0);
 }

@@ -2,12 +2,12 @@
 #define TRIE_H
 
 typedef struct trie_node_t {
-  char is_terminal;
+  unsigned char is_terminal;
   char value;
   struct trie_node_t *children[26];
 } trie_node_t;
 
-trie_node_t *trie_node_create(char is_terminal, char value);
+trie_node_t *trie_node_create(unsigned char is_terminal, char value);
 void trie_node_free(trie_node_t *node);
 
 typedef struct {

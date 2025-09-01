@@ -1,56 +1,38 @@
-#include "common.h"
-#include "heap.h"
+#include "trie.h"
 #include <stdio.h>
 
-int MAX_HEAP(void *a, void *b) { return (int)b - (int)a; }
-int MIN_HEAP(void *a, void *b) { return (int)a - (int)b; }
-
 int main() {
-  heap_t heap = heap_create(MAX_HEAP);
+  trie_t trie = trie_create();
+  char *word = "ca";
 
-  heap_insert(&heap, (void *)4);
-  heap_insert(&heap, (void *)1);
-  heap_insert(&heap, (void *)2);
-  heap_insert(&heap, (void *)9);
-  heap_insert(&heap, (void *)3);
-  heap_insert(&heap, (void *)100);
-  heap_insert(&heap, (void *)10);
+  printf("Entering: %s\n", word);
+  trie_insert(&trie, word);
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 
-  printf("Before\n");
-  heap_print(&heap);
+  word = "cats";
+  printf("Entering: %s\n", word);
+  trie_insert(&trie, word);
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 
-  heap_delete(&heap);
+  word = "catz";
+  printf("Entering: %s\n", word);
+  trie_insert(&trie, word);
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 
-  printf("After\n");
-  heap_print(&heap);
+  word = "c";
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 
-  heap_delete(&heap);
+  word = "catz";
+  printf("Removing: %s\n", word);
+  trie_delete(&trie, word);
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 
-  printf("After\n");
-  heap_print(&heap);
-
-  heap_delete(&heap);
-
-  printf("After\n");
-  heap_print(&heap);
-
-  heap_delete(&heap);
-
-  printf("After\n");
-  heap_print(&heap);
-
-  heap_delete(&heap);
-
-  printf("After\n");
-  heap_print(&heap);
-
-  heap_delete(&heap);
-
-  printf("After\n");
-  heap_print(&heap);
-
-  heap_delete(&heap);
-
-  printf("After\n");
-  heap_print(&heap);
+  word = "cats";
+  printf("Looking for %s: %s\n", word,
+         trie_find(&trie, word) ? "true" : "false");
 }

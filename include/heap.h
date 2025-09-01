@@ -3,6 +3,9 @@
 
 #include "array_list.h"
 
+int MAX_HEAP(void *a, void *b) { return (int)b - (int)a; }
+int MIN_HEAP(void *a, void *b) { return (int)a - (int)b; }
+
 typedef struct {
   array_list_t array;
   int (*comparator)(void *, void *);
