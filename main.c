@@ -1,23 +1,56 @@
-#include "binary_search_tree.h"
 #include "common.h"
+#include "heap.h"
 #include <stdio.h>
 
-int int_asc(void *a, void *b) { return (int)a < (int)b; }
+int MAX_HEAP(void *a, void *b) { return (int)b - (int)a; }
+int MIN_HEAP(void *a, void *b) { return (int)a - (int)b; }
 
 int main() {
-  bst_t bst = bst_create(int_asc);
-  bst_insert(&bst, (void *)8);
-  bst_insert(&bst, (void *)3);
-  bst_insert(&bst, (void *)10);
-  bst_insert(&bst, (void *)1);
-  bst_insert(&bst, (void *)6);
-  bst_insert(&bst, (void *)4);
-  bst_insert(&bst, (void *)7);
-  bst_insert(&bst, (void *)14);
-  bst_insert(&bst, (void *)13);
+  heap_t heap = heap_create(MAX_HEAP);
 
-  bst_print_int(&bst);
+  heap_insert(&heap, (void *)4);
+  heap_insert(&heap, (void *)1);
+  heap_insert(&heap, (void *)2);
+  heap_insert(&heap, (void *)9);
+  heap_insert(&heap, (void *)3);
+  heap_insert(&heap, (void *)100);
+  heap_insert(&heap, (void *)10);
 
-  bst_delete(&bst, (void *)6);
-  bst_print_int(&bst);
+  printf("Before\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
+
+  heap_delete(&heap);
+
+  printf("After\n");
+  heap_print(&heap);
 }

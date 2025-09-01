@@ -23,7 +23,7 @@ void bst_free(bst_t *bst) {
 }
 
 void bst_insert_helper(bst_t *bst, tree_node_t *node, void *value) {
-  if (bst->comparator(value, node->value)) {
+  if (bst->comparator(value, node->value) < 0) {
     if (node->left) {
       bst_insert_helper(bst, node->left, value);
     } else {
@@ -53,7 +53,7 @@ int bst_find_helper(bst_t *bst, tree_node_t *node, void *target) {
   if (node->value == target) {
     return 1;
   }
-  if (bst->comparator(target, node->value)) {
+  if (bst->comparator(target, node->value) < 0) {
     return bst_find_helper(bst, node->left, target);
   }
   return bst_find_helper(bst, node->right, target);
@@ -109,7 +109,7 @@ void bst_delete_helper(bst_t *bst, tree_node_t *node, void *target) {
 
       free(node);
     }
-  } else if (bst->comparator(target, node->value)) {
+  } else if (bst->comparator(target, node->value) < 0) {
     return bst_delete_helper(bst, node->left, target);
   } else {
     return bst_delete_helper(bst, node->right, target);

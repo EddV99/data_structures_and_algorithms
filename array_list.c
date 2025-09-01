@@ -49,6 +49,11 @@ void array_list_insert(array_list_t *array, size_t index, void *value) {
   array->size++;
 }
 
+void array_list_set(array_list_t *array, size_t index, void *value) {
+  ASSERT(index < array->size, "Array List: Index must be less than size");
+  array->values[index] = value;
+}
+
 void *array_list_pop_back(array_list_t *array) {
   ASSERT(array->size > 0, "Array List: Size must be greater than zero to pop");
   array->size--;
