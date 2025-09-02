@@ -10,6 +10,7 @@ typedef struct {
 } array_list_t;
 
 array_list_t array_list_create();
+array_list_t *array_list_new();
 
 void array_list_push_back(array_list_t *array, void *value);
 void array_list_insert(array_list_t *array, size_t index, void *value);
@@ -21,5 +22,6 @@ void *array_list_remove(array_list_t *array, size_t index);
 void *array_list_get(array_list_t *array, size_t index);
 
 void array_list_print_int(array_list_t *array);
+void array_list_print_size_t(array_list_t *array);
 
 #endif

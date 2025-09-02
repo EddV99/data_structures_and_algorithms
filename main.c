@@ -1,38 +1,16 @@
-#include "trie.h"
+#include "array_list.h"
+#include "graph.h"
+
 #include <stdio.h>
 
 int main() {
-  trie_t trie = trie_create();
-  char *word = "ca";
+  graph_t graph = graph_create(4, 1);
+  graph_add_edge(&graph, 0, 3, 0);
+  graph_add_edge(&graph, 0, 1, 0);
+  graph_add_edge(&graph, 2, 0, 0);
+  graph_add_edge(&graph, 3, 1, 0);
+  graph_add_edge(&graph, 3, 2, 0);
 
-  printf("Entering: %s\n", word);
-  trie_insert(&trie, word);
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
-
-  word = "cats";
-  printf("Entering: %s\n", word);
-  trie_insert(&trie, word);
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
-
-  word = "catz";
-  printf("Entering: %s\n", word);
-  trie_insert(&trie, word);
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
-
-  word = "c";
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
-
-  word = "catz";
-  printf("Removing: %s\n", word);
-  trie_delete(&trie, word);
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
-
-  word = "cats";
-  printf("Looking for %s: %s\n", word,
-         trie_find(&trie, word) ? "true" : "false");
+  array_list_t *array = graph_dfs(&graph, 3, 0);
+  array_list_print_size_t(array);
 }

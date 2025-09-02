@@ -15,5 +15,6 @@
 
 void swap(int *array, int x1, int x2);
 void array_print_int(int *array, int size);
+void array_print_size_t(size_t *array, int size);
 
 #endif
