@@ -47,16 +47,16 @@ void heap_heapify_down(heap_t *heap, size_t node_index) {
 
     if (right_index < heap->array.size) {
       void *right_value = array_list_get(&heap->array, right_index);
-      if (heap->comparator(left_value, right_value) < 0 &&
-          heap->comparator(node_value, left_value) > 0) {
-        array_list_set(&heap->array, node_index, left_value);
-        array_list_set(&heap->array, left_index, node_value);
-        node_index = left_index;
-      } else if (heap->comparator(right_value, left_value) < 0 &&
-                 heap->comparator(node_value, right_value) > 0) {
+      node_index = left_index;
+      if (heap->comparator(right_value, left_value) < 0 &&
+          heap->comparator(node_value, right_value) > 0) {
         array_list_set(&heap->array, node_index, right_value);
         array_list_set(&heap->array, right_index, node_value);
         node_index = right_index;
+      } else if (heap->comparator(left_value, right_value) < 0 &&
+                 heap->comparator(node_value, left_value) > 0) {
+        array_list_set(&heap->array, node_index, left_value);
+        array_list_set(&heap->array, left_index, node_value);
       }
       left_index = LEFT_CHILD_INDEX(node_index);
       right_index = RIGHT_CHILD_INDEX(node_index);
@@ -111,8 +111,10 @@ void heap_delete(heap_t *heap) {
   heap_heapify_down(heap, 0);
 }
 
+int heap_has(heap_t *heap) { return heap->array.size > 0; }
+
 void heap_print_helper_int(char *prefix, int size, heap_t *heap, size_t node,
-                           bool is_left) {
+                           int is_left) {
   if (node < heap->array.size) {
     printf("%s", prefix);
     printf("%s", is_left ? "├──" : "└──");
@@ -126,9 +128,9 @@ void heap_print_helper_int(char *prefix, int size, heap_t *heap, size_t node,
       snprintf(new_prefix, byte_count, "%s%s", prefix, "    ");
     }
     heap_print_helper_int(new_prefix, size + 4, heap, LEFT_CHILD_INDEX(node),
-                          true);
+                          1);
     heap_print_helper_int(new_prefix, size + 4, heap, RIGHT_CHILD_INDEX(node),
-                          false);
+                          0);
     free(new_prefix);
   }
 }
@@ -136,6 +138,6 @@ void heap_print_helper_int(char *prefix, int size, heap_t *heap, size_t node,
 void heap_print(heap_t *heap) {
   char *prefix = malloc(sizeof(char) * 1);
   prefix[0] = '\0';
-  heap_print_helper_int(prefix, 1, heap, 0, false);
+  heap_print_helper_int(prefix, 1, heap, 0, 0);
   free(prefix);
 }

@@ -3,8 +3,10 @@
 
 #include "array_list.h"
 
-int MAX_HEAP(void *a, void *b) { return (int)b - (int)a; }
-int MIN_HEAP(void *a, void *b) { return (int)a - (int)b; }
+extern int MAX_HEAP_INT(void *a, void *b);
+extern int MIN_HEAP_INT(void *a, void *b);
+extern int MAX_HEAP_SIZE_T(void *a, void *b);
+extern int MIN_HEAP_SIZE_T(void *a, void *b);
 
 typedef struct {
   array_list_t array;
@@ -17,6 +19,7 @@ void heap_free(heap_t *heap);
 void *heap_peek(heap_t *heap);
 void heap_insert(heap_t *heap, void *value);
 void heap_delete(heap_t *heap);
+int heap_has(heap_t *heap);
 
 void heap_print(heap_t *heap);
 

@@ -26,5 +26,6 @@ void graph_add_edge(graph_t *graph, size_t from, size_t to, float weight);
 
 array_list_t *graph_dfs(graph_t *graph, size_t from, size_t to);
 array_list_t *graph_bfs(graph_t *graph, size_t from, size_t to);
+array_list_t *graph_find_shortest_path(graph_t *graph, size_t from, size_t to);
 
 #endif
