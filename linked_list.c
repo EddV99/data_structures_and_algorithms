@@ -15,8 +15,8 @@ linked_list_t linked_list_create() {
   return list;
 }
 
-linked_list_t* linked_list_new() {
-  linked_list_t* list = malloc(sizeof(linked_list_t));
+linked_list_t *linked_list_new() {
+  linked_list_t *list = malloc(sizeof(linked_list_t));
   list->head = 0;
   list->tail = 0;
   list->size = 0;

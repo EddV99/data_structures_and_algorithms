@@ -16,7 +16,7 @@ typedef struct {
 } linked_list_t;
 
 linked_list_t linked_list_create();
-linked_list_t* linked_list_new();
+linked_list_t *linked_list_new();
 
 void linked_list_remove(linked_list_t *list, node_t *node);
 void linked_list_remove_at(linked_list_t *list, size_t index);

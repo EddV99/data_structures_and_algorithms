@@ -76,13 +76,13 @@ array_list_t *graph_dfs(graph_t *graph, size_t from, size_t to) {
   int visited[graph->vertex_count] = {};
   for (size_t i = 0; i < graph->vertex_count; i++)
     visited[i] = 0;
-  if(graph_dfs_helper(graph, from, to, result, visited)) {
-    array_list_insert(result, 0, (void*)from);
+  if (graph_dfs_helper(graph, from, to, result, visited)) {
+    array_list_insert(result, 0, (void *)from);
   }
   return result;
 }
 
-static array_list_t* prev_path(size_t* prev, size_t index) {
+static array_list_t *prev_path(size_t *prev, size_t index) {
   array_list_t *result = array_list_new();
   while (index != ((size_t)-1)) {
     array_list_insert(result, 0, (void *)index);
